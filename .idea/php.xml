@@ -108,6 +108,15 @@
       <path value="$PROJECT_DIR$/BourguiBook/vendor/symfony/cache-contracts" />
       <path value="$PROJECT_DIR$/BourguiBook/vendor/symfony/monolog-bundle" />
       <path value="$PROJECT_DIR$/BourguiBook/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/BourguiBook/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/BourguiBook/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/BourguiBook/vendor/fzaninotto/faker" />
+      <path value="$PROJECT_DIR$/BourguiBook/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/BourguiBook/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/BourguiBook/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/BourguiBook/vendor/easycorp/easyadmin-bundle" />
+      <path value="$PROJECT_DIR$/BourguiBook/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/BourguiBook/vendor/doctrine/data-fixtures" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
