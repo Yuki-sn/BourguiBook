@@ -1,0 +1,63 @@
+{# Variable Twig contenant le nom de la route actuelle (pour faire fonctionner correctement le menu) #}
+{% set currentRoute = app.request.attributes.get('_route') %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {# Le titre sera composé du titre de la page, suivi d'un tiret, suivi du nom du site déclaré dans le fichier config/packages/twig.yaml #}
+    <title>{% block title %}{% endblock %} - {{ site_name }}</title>
+    {# Inclusions des fichiers CSS généraux du site #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    {# Inclusion police d'écriture #}
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+    {# Inclusion des fichiers CSS individuels des pages #}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<div class="container-fluid">
+
+    <nav class="row navbar navbar-expand-lg navbar-dark bg-dark nav-main sticky-top">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="{{ path('main_home') }}">{{ site_name }}</a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('main_home') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('main_activity') }}"">Les activitées</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inscription</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+{# Affichage du contenu principal des pages #}
+{% block body %}{% endblock %}
+<footer>
+    <nav class="row nav justify-content-center footer navbar-dark bg-dark nav-footer">
+        <a class="nav-link" href="https://fr-fr.facebook.com/" target="_blank"><i class="fab fa-facebook-square"></i></a>
+        <a class="nav-link" href="https://www.instagram.com/?hl=fr" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+        <a class="nav-link" href="https://twitter.com/explore" target="_blank"><i class="fab fa-twitter-square"></i></a>
+    </nav>
+</footer>
+</div>
+{# Inclusion des fichiers JS généraux du site #}
+<script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+{# Inclusion des fichiers JS individuels des pages #}
+{% block javascripts %}{% endblock %}
+</body>
+</html>
