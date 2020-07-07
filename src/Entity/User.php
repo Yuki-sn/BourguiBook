@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -18,94 +21,29 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $pseudonym;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $firstname;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $lastname;
-
-    /**
-     * @ORM\Column(type="string", length=320)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
     private $password;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $phoneNumber;
-
-    /**
      * @ORM\Column(type="boolean")
      */
-    private $gender;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $role = [];
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $activated;
-
-    /**
-     * @ORM\Column(type="string", length=32)
-     */
-    private $registrationToken;
+    private $isVerified = false;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getPseudonym(): ?string
-    {
-        return $this->pseudonym;
-    }
-
-    public function setPseudonym(string $pseudonym): self
-    {
-        $this->pseudonym = $pseudonym;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): self
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): self
-    {
-        $this->lastname = $lastname;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -120,9 +58,41 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->password;
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
     }
 
     public function setPassword(string $password): self
@@ -132,62 +102,31 @@ class User
         return $this;
     }
 
-    public function getPhoneNumber(): ?int
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
     {
-        return $this->phoneNumber;
+        // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    public function setPhoneNumber(int $phoneNumber): self
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
     {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
-    public function getGender(): ?bool
+    public function isVerified(): bool
     {
-        return $this->gender;
+        return $this->isVerified;
     }
 
-    public function setGender(bool $gender): self
+    public function setIsVerified(bool $isVerified): self
     {
-        $this->gender = $gender;
-
-        return $this;
-    }
-
-    public function getRole(): ?array
-    {
-        return $this->role;
-    }
-
-    public function setRole(array $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    public function getActivated(): ?int
-    {
-        return $this->activated;
-    }
-
-    public function setActivated(int $activated): self
-    {
-        $this->activated = $activated;
-
-        return $this;
-    }
-
-    public function getRegistrationToken(): ?string
-    {
-        return $this->registrationToken;
-    }
-
-    public function setRegistrationToken(string $registrationToken): self
-    {
-        $this->registrationToken = $registrationToken;
+        $this->isVerified = $isVerified;
 
         return $this;
     }
