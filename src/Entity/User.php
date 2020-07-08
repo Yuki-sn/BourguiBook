@@ -41,6 +41,41 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $pseudonym;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $gender;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $activated;
+
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    private $registrationToken;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -127,6 +162,90 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getPseudonym(): ?string
+    {
+        return $this->pseudonym;
+    }
+
+    public function setPseudonym(string $pseudonym): self
+    {
+        $this->pseudonym = $pseudonym;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?int
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(int $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getGender(): ?bool
+    {
+        return $this->gender;
+    }
+
+    public function setGender(bool $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getActivated(): ?int
+    {
+        return $this->activated;
+    }
+
+    public function setActivated(int $activated): self
+    {
+        $this->activated = $activated;
+
+        return $this;
+    }
+
+    public function getRegistrationToken(): ?string
+    {
+        return $this->registrationToken;
+    }
+
+    public function setRegistrationToken(string $registrationToken): self
+    {
+        $this->registrationToken = $registrationToken;
 
         return $this;
     }
