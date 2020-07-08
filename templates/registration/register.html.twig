@@ -7,15 +7,47 @@
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
 
-    <h1>Création d'un compte</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="col-12 text-center my-5">Création d'un compte</h1>
+        </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        <div class="row">
+            <div class="col-12 col-md-4 offset-md-4">
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                {# Ouverture du formulaire #}
+                {{ form_start(registrationForm) }}
+
+                    {# Affichage champ pseudonym #}
+                    {{ form_row(registrationForm.pseudonym) }}
+
+                    {# Affichage champ firstname #}
+                    {{ form_row(registrationForm.firstname) }}
+
+                    {# Affichage champ lastname #}
+                    {{ form_row(registrationForm.lastname) }}
+
+                    {# Affichage champ gender #}
+                    {{ form_row(registrationForm.gender) }}
+
+                    {# Affichage champ phoneNumber #}
+                    {{ form_row(registrationForm.phoneNumber) }}
+
+                    {# Affichage champ email #}
+                    {{ form_row(registrationForm.email) }}
+
+                    {# Affichage champ plainPassword #}
+                    {{ form_row(registrationForm.plainPassword) }}
+
+                    {# Affichage champ des termes de conditions #}
+                    {{ form_row(registrationForm.agreeTerms) }}
+
+                    {# Affichage bouton de validation #}
+                    {{ form_row(registrationForm.save) }}
+
+                {# Fermeture du formulaire #}
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

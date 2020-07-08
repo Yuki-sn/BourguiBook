@@ -77,7 +77,7 @@ class MainController extends AbstractController
         $em->flush();
 
 
-        return $this->render(/* Une vue quelquonque... */);
+        return $this->render('main/password_changed.html.twig');
 
     }
 
