@@ -23,7 +23,7 @@
                 <p class="h3 mb-3 font-italic">Nous sommes heureux de vous revoir.</p>
 
                 <div class="form-group">
-                    <label for="inputEmail">Adresse électronique de l'utilisateur :</label>
+                    <label for="inputEmail">Adresse Email :</label>
                     <input placeholder="bourguibook@exemple.com" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
                     <small id="emailHelp" class="form-text text-muted">Vous devez vous connecter avec votre adresse email.</small>
                 </div>
@@ -39,5 +39,10 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{# Fichiers CSS individuels de la page #}
+{% block stylesheets %}
+
 {% endblock %}
 

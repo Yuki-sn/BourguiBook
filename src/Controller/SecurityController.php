@@ -8,11 +8,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
- * Liste des contrôleurs des pages connexion et déconnexion du site web.
+ * Liste des contrôleurs des pages du système d'authentification du site
  */
 class SecurityController extends AbstractController
 {
     /**
+     * Page de connexion
      * @Route("/connexion/", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -31,6 +32,8 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * Page de déconnexion
+     *
      * @Route("/deconnexion/", name="app_logout")
      */
     public function logout()

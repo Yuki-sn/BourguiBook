@@ -26,6 +26,7 @@ class RecaptchaValidator{
 
     /**
      * Méthode servant à vérifier auprès de Google si le code captcha $recaptchaResponse et l'adresse IP $ip correspondent à une captcha correctement validé
+     * @param string|null $ip Adresse IP client
      * La méthode renverra true si le captcha est correcte, sinon false
      */
     public function verify(string $recaptchaResponse, string $ip = null){

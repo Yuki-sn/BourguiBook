@@ -24,6 +24,7 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            // Champ pseudonyme
             ->add('pseudonym', TextType::class, [
                 'label' => 'Pseudonyme',
                 'constraints' => [
@@ -38,6 +39,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
+            // Champ prénom
             ->add('firstname', TextType::class, [
                 'label' => 'Votre prénom',
                 'attr' => [
@@ -55,6 +57,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
+            // Champ nom
             ->add('lastname', TextType::class, [
                 'label' => 'Votre prénom',
                 'attr' => [
@@ -72,6 +75,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
+            // Champ télephone
             ->add('phoneNumber', TextType::class, [
                 'label' => 'Télephone',
                 'attr' => [
@@ -93,6 +97,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
+            // Champ genre
             ->add('gender', ChoiceType::class, [
                 'label' => 'Vous êtes...',
                 'choices'  => [
@@ -108,6 +113,7 @@ class RegistrationFormType extends AbstractType
                     return strtoupper($key);
                 },
             ])
+            // Champ email
             ->add('email', EmailType::class, [
                 'label' => 'Adresse email',
                 'attr' => [
@@ -122,6 +128,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
+            // Champ mot de passe (en double avec sa confirmation)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe ne correspond pas à sa confirmation',
@@ -148,6 +155,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
+            // Champ conditions
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -156,6 +164,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            //Bouton de validation
             ->add('save', SubmitType::class, [
                 'label' => 'Créer mon compte',
                 'attr' => [

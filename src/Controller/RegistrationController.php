@@ -29,6 +29,8 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * Page d
+     *
      * @Route("/creer-un-compte/", name="app_register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, RecaptchaValidator $recaptcha): Response
