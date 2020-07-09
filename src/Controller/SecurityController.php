@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Liste des contrôleurs des pages connexion et déconnexion du site web.
+ */
 class SecurityController extends AbstractController
 {
     /**

@@ -10,3 +10,4 @@ twig:
     # Paramètres globaux, accessibles dans tous les fichiers Twig du site
     globals:
         site_name: 'BourguiBook'
+        google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'

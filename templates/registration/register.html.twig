@@ -42,6 +42,11 @@
                     {# Affichage champ des termes de conditions #}
                     {{ form_row(registrationForm.agreeTerms) }}
 
+                    {# Affichage recaptcha Google #}
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_site_key }}"></div>
+                    </div>
+
                     {# Affichage bouton de validation #}
                     {{ form_row(registrationForm.save) }}
 
@@ -50,4 +55,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {# Insertion du fichier JS dans le block stylesheets, ce n'est pas une erreur, la documentation de Recaptcha préconise en effet d'intégrer ce fichier JS dans le head #}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}

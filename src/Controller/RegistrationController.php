@@ -13,7 +13,12 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Recaptcha\RecaptchaValidator;  // Importation de notre service de validation du captcha
+use Symfony\Component\Form\FormError;  // Importation de la classe permettant de créer des erreurs dans les formulaires
 
+/**
+ * Liste du contrôleur de la page d'inscription du site web.
+ */
 class RegistrationController extends AbstractController
 {
     private $emailVerifier;
@@ -26,7 +31,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/creer-un-compte/", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, RecaptchaValidator $recaptcha): Response
     {
         // Redirection de l'utilisateur vers l'accueil s'il est déjà connecté
         if($this->getUser()){
@@ -37,34 +42,47 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user
-                ->setPassword(
-                    $passwordEncoder->encodePassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
+        if ($form->isSubmitted()) {
+
+            // Si le captcha n'est pas valide, on crée une nouvelle erreur dans le formulaire (ce qui l'empêchera de créer l'article et affichera l'erreur)
+            // $request->request->get('g-recaptcha-response')  -----> code envoyé par le captcha dont la méthode verify() a besoin
+            // $request->server->get('REMOTE_ADDR') -----> Adresse IP de l'utilisateur dont la méthode verify() a besoin
+            if(!$recaptcha->verify( $request->request->get('g-recaptcha-response'), $request->server->get('REMOTE_ADDR') )){
+
+                // Ajout d'une nouvelle erreur manuellement dans le formulaire
+                $form->addError(new FormError('Le Captcha doit être validé !'));
+            }
+
+            if($form->isValid()) {
+                // Hydratation du nouveau compte
+                $user
+                    ->setPassword(
+                        $passwordEncoder->encodePassword(
+                            $user,
+                            $form->get('plainPassword')->getData()
+                        )
                     )
-                )
-                ->setActivated(false)
-                ->setRegistrationToken( md5( random_bytes(100) ) )
-            ;
+                    ->setActivated(false)
+                    ->setRegistrationToken( md5( random_bytes(100) ) )
+                ;
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('mailer@bourguibook.fr', 'Bourgui Book Mail'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-            // do anything else you need here, like send an email
+                // generate a signed url and email it to the user
+                $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('mailer@bourguibook.fr', 'Bourgui Book Mail'))
+                        ->to($user->getEmail())
+                        ->subject('Please Confirm your Email')
+                        ->htmlTemplate('registration/confirmation_email.html.twig')
+                );
+                // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('main_home');
+                return $this->redirectToRoute('main_home');
+            }
+
         }
 
         return $this->render('registration/register.html.twig', [

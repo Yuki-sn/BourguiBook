@@ -28,7 +28,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/profil", name="profil")
+     * @Route("/mon-profil/", name="profil")
      * @Security("is_granted('ROLE_USER')")
      */
     public function profil()
@@ -39,7 +39,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/administration", name="admin")
+     * @Route("/admin/", name="admin")
      * @Security("is_granted('ROLE_ADMIN')")
      */
     public function admin()

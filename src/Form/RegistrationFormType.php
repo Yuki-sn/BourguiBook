@@ -96,9 +96,17 @@ class RegistrationFormType extends AbstractType
             ->add('gender', ChoiceType::class, [
                 'label' => 'Vous êtes...',
                 'choices'  => [
-                    'Homme' => 'H',
-                    'Femme' => 'F',
+                    '-Aucun-' => null,
+                    'Homme' => true,
+                    'Femme' => false,
                 ],
+                'choice_label' => function($choice, $key, $value) {
+                    if (true === $choice) {
+                        return 'Homme';
+                    }
+
+                    return strtoupper($key);
+                },
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Adresse email',
@@ -151,7 +159,7 @@ class RegistrationFormType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Créer mon compte',
                 'attr' => [
-                    'class' => 'btn btn-outline-primary col-12'
+                    'class' => 'btn btn-outline-secondary col-12'
                 ]
             ])
         ;
