@@ -2,7 +2,7 @@
 {% extends 'base.html.twig' %}
 
 {# Remplissage du block title avec le titre de la page #}
-{% block title %}Gestion du profil{% endblock %}
+{% block title %}Profil{% endblock %}
 
 {# Remplissage du block body avec le contenu de la page #}
 {% block body %}
@@ -17,7 +17,6 @@
         <div class="row">
             <div class="col-12 col-md-10 offset-md-1">
                 <div class="row">
-                    
                     <div class="col-12 col-md-10 px-2 py-3 bg-dark d-flex justify-content-center align-items-center">
                         <ul class="list-group col-12 col-md-8 p-0">
                             <li class="list-group-item bg-black">Pseudonyme : <span class="text-dark">{{ app.user.pseudonym }}</span></li>

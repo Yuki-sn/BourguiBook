@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Activity;
+use App\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -15,14 +16,14 @@ class MainController extends AbstractController
 {
     /**
      * @Route("/", name="main_home")
-     * @Security("is_granted('ROLE_USER')")
+     *
      */
     public function index()
     {
         $articleRepository = $this->getDoctrine()->getRepository(Activity::class);
         $foundArticles = $articleRepository->findAll();
 
-        dump($foundArticles);
+        
 
         return $this->render('main/home.html.twig');
     }

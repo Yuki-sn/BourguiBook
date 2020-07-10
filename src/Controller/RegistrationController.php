@@ -29,7 +29,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * Page d
+     * Page d'inscription
      *
      * @Route("/creer-un-compte/", name="app_register")
      */
@@ -77,10 +77,13 @@ class RegistrationController extends AbstractController
                     (new TemplatedEmail())
                         ->from(new Address('mailer@bourguibook.fr', 'Bourgui Book Mail'))
                         ->to($user->getEmail())
-                        ->subject('Please Confirm your Email')
+                        ->subject('Veuillez confirmer votre email')
                         ->htmlTemplate('registration/confirmation_email.html.twig')
                 );
                 // do anything else you need here, like send an email
+
+                // Création message de succès
+                $this->addFlash('success', 'Votre compte a bien été créé ! Un email vous a été envoyé pour confirmer votre compte.');
 
                 return $this->redirectToRoute('main_home');
             }
@@ -109,8 +112,8 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO: Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Votre adresse e-mail a été vérifiée.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_login');
     }
 }

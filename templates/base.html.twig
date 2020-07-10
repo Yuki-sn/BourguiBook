@@ -18,70 +18,70 @@
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    {# Navbar principale #}
-    <nav class="row navbar navbar-expand-lg navbar-dark bg-dark nav-main sticky-top">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="{{ path('main_home') }}">{{ site_name }}</a>
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('main_home') }}">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('main_activity') }}">Les activitées</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                {# Boutons si l'utilisateur est connecté #}
-                {% if app.user %}
-
-                    <li class="nav-item dropdown">
-                        <a data-toggle="dropdown" aria-haspopup="true" role="button" id="profil-dropdown" href="#" class="nav-link dropdown-toggle text-light">
-                            <i class="fas fa-user mr-1"></i>{{ app.user.pseudonym }}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="profil-dropdown">
-                            <a href="{{ path('profil') }}" class="dropdown-item"><i class="fas fa-users-cog mr-1"></i>Mon profil</a>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('admin') }}" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt mr-1"></i>Administration</a>
-                            {% endif %}
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ path('app_logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt mr-1"></i>Déconnexion</a>
-                        </div>
-                    </li>
-
-                {# Boutons si l'utilisateur n'est pas connecté #}
-                {% else %}
+        {# Navbar principale #}
+        <nav class="row navbar navbar-expand-lg navbar-dark bg-dark nav-main sticky-top">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="{{ path('main_home') }}">{{ site_name }}</a>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_register') }}"><i class="fas fa-user-plus mr-1"></i>Inscription</a>
+                        <a class="nav-link" href="{{ path('main_home') }}"><i class="fas fa-home mr-1"></i>Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_login') }}"><i class="fas fa-sign-in-alt mr-1"></i>Connexion</a>
+                        <a class="nav-link" href="{{ path('main_activity') }}">Les activitées</a>
                     </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
+                </ul>
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    {# Boutons si l'utilisateur est connecté #}
+                    {% if app.user %}
 
-{# Affichage du contenu principal des pages #}
-{% block body %}{% endblock %}
-<footer>
-    <nav class="row nav justify-content-center footer navbar-dark bg-dark nav-footer">
-        <a class="nav-link" href="https://fr-fr.facebook.com/" target="_blank"><i class="fab fa-facebook-square"></i></a>
-        <a class="nav-link" href="https://www.instagram.com/?hl=fr" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-        <a class="nav-link" href="https://twitter.com/explore" target="_blank"><i class="fab fa-twitter-square"></i></a>
-    </nav>
-</footer>
-</div>
-{# Inclusion des fichiers JS généraux du site #}
-<script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
-<script src="{{ asset('js/popper.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+                        <li class="nav-item dropdown">
+                            <a data-toggle="dropdown" aria-haspopup="true" role="button" id="profil-dropdown" href="#" class="nav-link dropdown-toggle text-light">
+                                <i class="fas fa-user mr-1"></i>{{ app.user.pseudonym }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="profil-dropdown">
+                                <a href="{{ path('profil') }}" class="dropdown-item"><i class="fas fa-users-cog mr-1"></i>Mon profil</a>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('admin') }}" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt mr-1"></i>Administration</a>
+                                {% endif %}
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ path('app_logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt mr-1"></i>Déconnexion</a>
+                            </div>
+                        </li>
 
-{# Inclusion des fichiers JS individuels des pages #}
-{% block javascripts %}{% endblock %}
+                    {# Boutons si l'utilisateur n'est pas connecté #}
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_register') }}"><i class="fas fa-user-plus mr-1"></i>Inscription</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_login') }}"><i class="fas fa-sign-in-alt mr-1"></i>Connexion</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+
+        {# Affichage du contenu principal des pages #}
+        {% block body %}{% endblock %}
+        <footer>
+            <nav class="row nav justify-content-center footer navbar-dark bg-dark nav-footer">
+                <a class="nav-link" href="https://fr-fr.facebook.com/" target="_blank"><i class="fab fa-facebook-square"></i></a>
+                <a class="nav-link" href="https://www.instagram.com/?hl=fr" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                <a class="nav-link" href="https://twitter.com/explore" target="_blank"><i class="fab fa-twitter-square"></i></a>
+            </nav>
+        </footer>
+    </div>
+    {# Inclusion des fichiers JS généraux du site #}
+    <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+    {# Inclusion des fichiers JS individuels des pages #}
+    {% block javascripts %}{% endblock %}
 </body>
 </html>
