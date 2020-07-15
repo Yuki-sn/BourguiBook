@@ -36,7 +36,6 @@ class CommentType extends AbstractType
                     ])
                 ]
             ])
-            ->add('publicationDate')
             ->add('save', SubmitType::class, [
                 'label' => 'Publier',
                 'attr' => [

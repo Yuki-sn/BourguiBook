@@ -64,7 +64,6 @@ class RegistrationController extends AbstractController
                             $form->get('plainPassword')->getData()
                         )
                     )
-                    ->setActivated(false)
                     ->setRegistrationToken( md5( random_bytes(100) ) )
                 ;
 
@@ -111,7 +110,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO: Change the redirect on success and handle or remove the flash message in your templates
+        // message de succès de vérification d'email
         $this->addFlash('success', 'Votre adresse e-mail a été vérifiée.');
 
         return $this->redirectToRoute('app_login');

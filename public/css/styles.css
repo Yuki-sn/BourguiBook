@@ -1,8 +1,62 @@
-.nav-footer>a{
-    color: white;
-    font-size: 1.6rem;
+/*Police d'écriture*/
+@font-face{
+    font-family: 'Palace';
+    src: url('../fonts/Palace.ttf');
+}
+@font-face{
+    font-family: 'Birds of Paradise';
+    src: url('../fonts/Birds\ of\ Paradise\ ©\ PERSONAL\ USE\ ONLY.ttf');
+}
+
+/*NAVBAR*/
+.navbar-dark .navbar-nav .nav-link{
+    color: rgb(255, 255, 255);
 }
 .navbar-dark .navbar-nav .nav-link:hover{
-    color: white;
+    color: #fa8888;
     cursor: pointer;
+}
+.navbar-dark .navbar-toggler{
+    border-color: rgb(255, 255, 255);
+}
+.navbar-dark .navbar-toggler-icon{
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/*Propriétés générales*/
+h1{
+    font-family: Birds of Paradise, Roboto, Arial, Helvetica, sans-serif;
+    font-size: 3em;
+    color: rgb(255, 255, 255);
+}
+h2, h3{
+    font-family: Palace ,Roboto , Cambria, Georgia, Times, 'Times New Roman', serif;
+    color: rgb(255, 255, 255);
+}
+p,a{
+    font-family: Roboto, Arial, sans-serif;
+    color: rgb(255, 255, 255);
+}
+body{
+    background: #200122;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+/*footer*/
+.nav-footer>a>i{
+    color: white;
+    font-size: 2.6rem;
+}
+.nav-footer>div>a:hover{
+    color: #fa8888;
+}
+.nav-footer>div>a>i{
+    font-size: 2rem;
+}
+
+/*Profil*/
+.border-style{
+    border: black solid 3px;
 }

@@ -1,0 +1,39 @@
+{# Cette page utilise le squelette base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Remplissage du block title avec le titre de la page #}
+{% block title %}Contact{% endblock %}
+
+{# Remplissage du block body avec le contenu de la page #}
+{% block body %}
+
+    <div class="container-fluid">
+        {# H1 #}
+        <div class="row">
+            <h1 class="col-12 text-center my-5">Nous contactez !</h1>
+        </div>
+
+        {# Formulaire de contact #}
+        <div class="row">
+            <div class="col-12 col-md-4 offset-md-4">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="inputEmail" class="text-white">Adresse Email :</label>
+                        <input placeholder="bourguibook@exemple.com" type="email" name="email" id="inputEmail" class="form-control" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="text-white">Mot de passe :</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" required>
+                    </div>
+                    <input type="submit" class="btn btn-outline-secondary col-12">
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{# Fichiers CSS individuels de la page #}
+{% block stylesheets %}
+
+{% endblock %}

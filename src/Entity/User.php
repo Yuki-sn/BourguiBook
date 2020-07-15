@@ -69,11 +69,6 @@ class User implements UserInterface
     private $gender;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $activated;
-
-    /**
      * @ORM\Column(type="string", length=32)
      */
     private $registrationToken;
@@ -242,18 +237,6 @@ class User implements UserInterface
     public function setGender(bool $gender): self
     {
         $this->gender = $gender;
-
-        return $this;
-    }
-
-    public function getActivated(): ?bool
-    {
-        return $this->activated;
-    }
-
-    public function setActivated(bool $activated): self
-    {
-        $this->activated = $activated;
 
         return $this;
     }
