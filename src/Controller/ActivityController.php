@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Activity;
 use App\Form\ActiviteType;
-use Faker;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -52,7 +51,9 @@ class ActivityController extends AbstractController
      */
     public function newActivity(Request $request)
     {
-        $faker = Faker\Factory::create('fr_FR');
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('main_home');
+        }
         $newactivite = new Activity();
 
         $form = $this->createForm(ActiviteType::class , $newactivite);
@@ -76,8 +77,6 @@ class ActivityController extends AbstractController
             $newactivite
                 ->setPublicationDate(new \DateTime())
                 ->setPictur($newFileName)
-                ->setEmail($faker->email)
-                ->setPhoneNumber($faker->phoneNumber(10))
             ;
             $em = $this->getDoctrine()->getManager();
             $em->persist($newactivite);
@@ -137,6 +136,9 @@ class ActivityController extends AbstractController
                 ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.postalCode LIKE :code AND a.typeActivity LIKE :type AND a.city LIKE :ville ')
                 ->setParameters(['type' => '%' . $activityType . '%','code' => '%' . $postalCode . '%','ville' => '%' . $ville . '%']);
             ;
+        }elseif (empty($activityType) && empty($postalCode) && empty($ville)){
+            $this->addFlash('error', 'veuiller ne pas envoier un formulaire vide');
+            return $this->redirectToRoute('main_home');
         }elseif (!empty($activityType) && !empty($postalCode)){
             $query = $em
                 ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.postalCode LIKE :code AND a.typeActivity LIKE :type ')
@@ -175,8 +177,7 @@ class ActivityController extends AbstractController
             $requestedPage,
             6
         );
-
-        dump($query);
+        
         // Appel de la vue en lui envoyant les articles à afficher
         return $this->render('activity/actitivySearch.html.twig', [
             'activitys' => $activity

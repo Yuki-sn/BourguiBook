@@ -11,8 +11,8 @@
 
     <!--Titre-->
     <div class="row banner d-flex align-items-center">
-        <div class="col-8 offset-2 text-center">
-            <h1>{{ activitys.title }}</h1>
+        <div class="col-8 offset-2 text-center view ">
+            <h1 class="color-white">{{ activitys.title }}</h1>
         </div>
     </div>
     <!--Card contenant l'image et les infos-->
@@ -25,6 +25,7 @@
                     <p class="card-title">l'activiter est disponible du {{ activitys.StartDate|date('d/m/Y') }} au {{ activitys.endDate|date('d/m/Y') }}
                         et celle ci se situe au {{ activitys.address }} à {{ activitys.city }} ({{ activitys.postalCode }})</p>
                     <a href="https://www.tripadvisor.fr/" class="btn btn-dark">Réserver </a>
+                    <a class="btn btn-outline-secondary bg-dark color-white" href="{{ path('main_activity') }}">retour</a>
 
                 </div>
             </div>
@@ -32,10 +33,9 @@
     </section>
     <!--Map Google -->
     <section class="row mt-3">
-        <div class="col-12 mt-3 col-md-8 offset-md-2 text-center">
-            <iframe class="iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5461.569640485388!2d4.404794222474302!3d46.808544445855965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f24be8fa7688cf%3A0x842c4d436365d1bf!2sInstitut%20Universitaire%20de%20Technologie%20Le%20Creusot!5e0!3m2!1sfr!2sfr!4v1594283688276!5m2!1sfr!2sfr" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        <div class="col-12 mt-3 col-md-8 offset-md-2 text-center iframe">
+            <iframe  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5461.569640485388!2d4.404794222474302!3d46.808544445855965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f24be8fa7688cf%3A0x842c4d436365d1bf!2sInstitut%20Universitaire%20de%20Technologie%20Le%20Creusot!5e0!3m2!1sfr!2sfr!4v1594283688276!5m2!1sfr!2sfr" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
         </div>
     </section>
-
 
 {% endblock %}

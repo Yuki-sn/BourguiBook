@@ -6,10 +6,10 @@
 
 {# Contenu de la page #}
 {% block body %}
-    {# Affichage des messages flashs de type "success" si il y en a #}
-    {% include 'partials/success.html.twig' %}
-    <div class="row">
-     <h3 class="col-12 text-center my-5">Résultat de votre recherche </h3>
+
+    <div class="row view">
+        <h3 class="col-12 text-center my-5 color-white">Résultat de votre recherche si dessous <a class="btn btn-outline-secondary bg-light" href="{{ path('main_activity') }}">retour</a> </h3>
+
     </div>
 
     <div class="container-fluid">

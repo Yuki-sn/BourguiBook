@@ -7,9 +7,20 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Activity;
 use Faker;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ActivityFake extends Fixture
 {
+    private $encoder;
+
+    /**
+     * Utilisation du constructeur pour récupérer le service de hashage des mots de passe via autowiring
+     */
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -19,7 +30,7 @@ class ActivityFake extends Fixture
         $admin
             ->setEmail('admin@a.a')
             ->setRoles(["ROLE_ADMIN"])
-            ->setPassword('aaaaaaaaA7/')
+            ->setPassword($this->encoder->encodePassword($admin, 'aaaaaaaaA7/'))
             ->setIsVerified(true)
             ->setPseudonym('Yuki')
             ->setFirstname('clement')
@@ -60,6 +71,7 @@ class ActivityFake extends Fixture
                 ->setPhoneNumber($faker->phoneNumber(10))
                 ->setPublicationDate($faker->dateTimeBetween('-5years', 'now')  ) // Vu que la propriété "publicationDate" que nous avions créé est de type dateTime, cette dernière n'accepte que des instances de la classe Datetime (avec un \ devant car il s'agit d'une classe qui n'existe que dans le namespace global)
                 ->setPictur($faker->text(20))
+                ->setAuthor($admin)
                 
             ;
             // Actuellement Doctrine ne "connais pas" encore notre nouvel article. Pour qu'il puisse le sauvegarder en base de données il faut d'abord le "porter à sa connaissance" avec la méthode persist()

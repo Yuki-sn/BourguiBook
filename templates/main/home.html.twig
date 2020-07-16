@@ -7,6 +7,9 @@
 
 {# Contenu de la page #}
 {% block body %}
+    {# Affichage des messages flashs de type "success" si il y en a #}
+    {% include 'partials/error.html.twig' %}
+    {% include 'partials/success.html.twig' %}
 
     <div class="container-fluid">
         <div class="row">
