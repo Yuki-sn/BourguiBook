@@ -1,7 +1,7 @@
 /*Police d'écriture*/
 @font-face{
-    font-family: 'Palace';
-    src: url('../fonts/Palace.ttf');
+    font-family: 'Champagne et Limousine';
+    src: url('../fonts/Champagne\ &\ Limousines\ Bold\ Italic.ttf');
 }
 @font-face{
     font-family: 'Birds of Paradise';
@@ -30,12 +30,13 @@ h1{
     color: darkgray;
 }
 h2, h3{
-    font-family: Palace ,Roboto , Cambria, Georgia, Times, 'Times New Roman', serif;
+    font-family: Champagne et Limousine ,Roboto , Cambria, Georgia, Times, 'Times New Roman', serif;
     color: darkgray;
+    font-size: 2em;
 }
 p,a{
     font-family: Roboto, Arial, sans-serif;
-    color: darkgray;
+    color: dark;
 }
 body{
     background: #200122;  /* fallback for old browsers */

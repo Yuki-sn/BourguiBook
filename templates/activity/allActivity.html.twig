@@ -2,7 +2,7 @@
 {% extends 'base.html.twig' %}
 
 {# Titre de la page #}
-{% block title %}Toutes les activité{% endblock %}
+{% block title %}Toutes les activités{% endblock %}
 
 {# Contenu de la page #}
 {% block body %}
@@ -13,17 +13,17 @@
                 <div class="row mr-md-5 ">
                     <div class="col-10 offset-1 col-md-4 mt-3 ">
                         <form class="form-inline my-2 my-lg-0" method="GET" action="{{ path('activity_search') }}">
-                            <fieldset><!--Regroupe un ensemble de champs avec légende-->
+                            <fieldset><!--Regroupe un ensemble des champs avec légende-->
                                 <select class="form-control " type="search" name="q">
-                                    <option selected disabled >choissisait une activité par son type</option>
-                                    <option value="hotel">Hotel</option>
+                                    <option selected disabled >Choisissez une activité par son type</option>
+                                    <option value="hotel">Hôtel</option>
                                     <option value="restaurant">Restaurant</option>
                                     <option value="autre">Autre</option>
                                 </select>
                             </fieldset>
                             <input type="text" class="form-control" name="c" placeholder="Code postal">
                             <input type="text" class="form-control" name="v" placeholder="Ville">
-                            <button type="submit" class=" offset-4 btn btn-dark">Validé</button
+                            <button type="submit" class=" offset-4 btn btn-dark">Valider</button
                         </form>
                     </div>
                 </div>

@@ -7,15 +7,17 @@ use App\Form\ActiviteType;
 use Faker;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Entity\Comment;
+use App\Form\CommentType;
 use Symfony\Component\HttpFoundation\Request;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use \DateTime;
 
 class ActivityController extends AbstractController
 {
     /**
-     * @Route("/toutes-les-activite/", name="main_activity")
+     * @Route("/toutes-les-activites/", name="main_activity")
      */
     public function allActivity(Request $request, PaginatorInterface $paginator)
     {
@@ -48,7 +50,7 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * @Route("/ajouter_une_activiter/", name="add_activity")
+     * @Route("/ajouter_une_activite/", name="add_activity")
      */
     public function newActivity(Request $request)
     {
@@ -103,8 +105,55 @@ class ActivityController extends AbstractController
      */
     public function publicationView(Activity $activity, Request $request)
     {
-        return $this->render('activity/activityView.html.twig',[
-            'activitys' => $activity
+        // Si l'utilisateur n'est pas connecté, on appel la vue directement pour pas que le formulaire soit traité
+        if(!$this->getUser()){
+            // Appel de la vue en envoyant l'article qui sera affiché dessus
+            return $this->render('activity/activityView.html.twig',[
+                'activitys' => $activity
+            ]);
+        }
+
+        $comment = new Comment();
+
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $connectedUser = $this->getUser();
+
+            $comment
+                ->setAuthor($connectedUser)
+                ->setPublicationDate( new DateTime())
+                ->setActivity($activity)
+            ;
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($comment);
+
+            $em->flush();
+
+            $this->addFlash('success', 'Votre commentaire a été publié avec succès !');
+
+            // Reset du formulaire
+            unset($comment);
+            unset($form);
+
+            $comment = new Comment();
+
+            $form = $this->createForm(CommentType::class, $comment);
+        }
+
+        $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
+
+        $comments = $commentRepo->findByActivity($activity);
+
+        // Appel de la vue en envoyant l'article qui sera affiché dessus
+        return $this->render('activity/activityView.html.twig', [
+            'activitys' => $activity,
+            'commentForm' => $form->createView()
         ]);
     }
 
@@ -177,7 +226,7 @@ class ActivityController extends AbstractController
         );
 
         dump($query);
-        // Appel de la vue en lui envoyant les articles à afficher
+        // Appel de la vue en lui envoyant les activités à afficher
         return $this->render('activity/actitivySearch.html.twig', [
             'activitys' => $activity
         ]);

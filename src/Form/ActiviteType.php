@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTime;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Validator\Constraints\Length;
@@ -124,7 +124,8 @@ class ActiviteType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('description', TextType::class, [
+            ->add('description', CKEditorType::class, [
+                'purify_html' => true,
                 'label' => 'Description de l\'activite',
                 'constraints' => [
                     new NotBlank([

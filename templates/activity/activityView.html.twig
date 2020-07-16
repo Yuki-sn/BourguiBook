@@ -22,11 +22,39 @@
                 <img class="card-img-top picture_wihe" src="{{ asset('images/uploads/') ~ activitys.pictur }}" alt="Card image cap">
                 <div class="card-body text-center">
                     <p class="card-text">{{ activitys.description }}</p>
-                    <p class="card-title">l'activiter est disponible du {{ activitys.StartDate|date('d/m/Y') }} au {{ activitys.endDate|date('d/m/Y') }}
-                        et celle ci se situe au {{ activitys.address }} à {{ activitys.city }} ({{ activitys.postalCode }})</p>
+                    <p class="card-title">L'activité est disponible du {{ activitys.StartDate|date('d/m/Y') }} au {{ activitys.endDate|date('d/m/Y') }}
+                        et celle-ci se situe à {{ activitys.address }} à {{ activitys.city }} ({{ activitys.postalCode }})</p>
                     <a href="https://www.tripadvisor.fr/" class="btn btn-dark">Réserver </a>
-
                 </div>
+            </div>
+        </div>
+    </section>
+    <section  class="row mt-3" id="comment">
+        <div  class="col-12 mt-2 col-md-6 offset-md-3">
+            <div class="card-body text-center">
+                <h2 class="mb-5 text-center">Commentaires</h2>
+                <div>
+                    {% if activitys.comments is empty %}
+                        <p class="text-center alert alert-warning">Aucun commentaire n'a été publié pour le moment.</p>
+                    {% else %}
+                        {% for comment in activitys.comments %}
+                            <div class="card my-3 bg-white my-3">
+                                <div class="card-body row">
+                                    <div class="col-12">
+                                        <footer class="blockquote-footer mb-4">Ajouté par <strong class="text-dark"> {{ comment.author.pseudonym }} </strong><br class="d-sm-none"> Le <stong class="text-dark"> {{ comment.publicationDate|date('d/m/Y à H\\hi') }} </stong></footer>
+                                        <p>{{ comment.content }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% if app.user %}
+                    <h2 class="mb-5 text-center">Ecrire un commentaire</h2>
+                    <div>{{ form(commentForm) }}</div>
+                {% else %}
+                    <p class="text-center text-white mt-4">Vous devez <a href="{{ path('app_login') }}">vous connecter</a> pour laisser un commentaire.</p>
+                {% endif %}
             </div>
         </div>
     </section>
