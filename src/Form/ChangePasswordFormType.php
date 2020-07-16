@@ -33,10 +33,10 @@ class ChangePasswordFormType extends AbstractType
                             'maxMessage' => 'Mot de passe trop grand',
                         ]),
                     ],
-                    'label' => 'Nouveau mot de passe',
+                    'label' => 'Nouveau mot de passe*',
                 ],
                 'second_options' => [
-                    'label' => 'Confirmation du nouveau mot de passe',
+                    'label' => 'Confirmation du nouveau mot de passe*',
                 ],
                 'invalid_message' => 'Le mot de passe ne correspond pas à sa confirmation',
                 // Instead of being set onto the object directly,
@@ -47,7 +47,7 @@ class ChangePasswordFormType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Modifier le mot de passe',
                 'attr' => [
-                    'class' => 'btn btn-outline-secondary col-12',
+                    'class' => 'btn btn-outline-secondary col-12 bg-dark',
                 ]
             ])
         ;

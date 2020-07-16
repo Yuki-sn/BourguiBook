@@ -39,7 +39,7 @@ class CommentType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Publier',
                 'attr' => [
-                    'class' => 'btn btn-outline-secondary col-12'
+                    'class' => 'btn btn-outline-secondary col-12 bg-dark'
                 ]
             ])
         ;

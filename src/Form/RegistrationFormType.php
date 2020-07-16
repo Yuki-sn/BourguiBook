@@ -26,7 +26,7 @@ class RegistrationFormType extends AbstractType
         $builder
             // Champ pseudonyme
             ->add('pseudonym', TextType::class, [
-                'label' => 'Pseudonyme',
+                'label' => 'Pseudonyme*',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci de renseigner un pseudonyme',
@@ -41,7 +41,7 @@ class RegistrationFormType extends AbstractType
             ])
             // Champ prénom
             ->add('firstname', TextType::class, [
-                'label' => 'Votre prénom',
+                'label' => 'Votre prénom*',
                 'attr' => [
                     'placeholder' => 'Jean'
                 ],
@@ -59,7 +59,7 @@ class RegistrationFormType extends AbstractType
             ])
             // Champ nom
             ->add('lastname', TextType::class, [
-                'label' => 'Votre prénom',
+                'label' => 'Votre nom*',
                 'attr' => [
                     'placeholder' => 'Dupont'
                 ],
@@ -77,7 +77,7 @@ class RegistrationFormType extends AbstractType
             ])
             // Champ télephone
             ->add('phoneNumber', TextType::class, [
-                'label' => 'Télephone',
+                'label' => 'Télephone*',
                 'attr' => [
                     'placeholder' => '+330999999999',
                 ],
@@ -99,7 +99,7 @@ class RegistrationFormType extends AbstractType
             ])
             // Champ genre
             ->add('gender', ChoiceType::class, [
-                'label' => 'Vous êtes...',
+                'label' => 'Vous êtes...*',
                 'choices'  => [
                     '-Aucun-' => null,
                     'Homme' => true,
@@ -115,7 +115,7 @@ class RegistrationFormType extends AbstractType
             ])
             // Champ email
             ->add('email', EmailType::class, [
-                'label' => 'Adresse email',
+                'label' => 'Adresse email*',
                 'attr' => [
                     'placeholder' => 'bourguibook@exemple.com'
                 ],
@@ -134,10 +134,10 @@ class RegistrationFormType extends AbstractType
                 'invalid_message' => 'Le mot de passe ne correspond pas à sa confirmation',
                 'mapped' => false,
                 'first_options' => [
-                    'label' => 'Mot de passe',
+                    'label' => 'Mot de passe*',
                 ],
                 'second_options' => [
-                    'label' => 'Confirmation du mot de passe',
+                    'label' => 'Confirmation du mot de passe*',
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -157,6 +157,7 @@ class RegistrationFormType extends AbstractType
             ])
             // Champ conditions
             ->add('agreeTerms', CheckboxType::class, [
+                'label' => 'Termes et conditions*',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
@@ -168,7 +169,7 @@ class RegistrationFormType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Créer mon compte',
                 'attr' => [
-                    'class' => 'btn btn-outline-secondary col-12'
+                    'class' => 'btn btn-outline-secondary col-12 bg-dark'
                 ]
             ])
         ;

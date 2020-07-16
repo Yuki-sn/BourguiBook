@@ -17,7 +17,7 @@ class ResetPasswordRequestFormType extends AbstractType
         $builder
             // Champ email
             ->add('email', EmailType::class, [
-                'label' => 'Adresse Email',
+                'label' => 'Adresse Email*',
                 'constraints' => [
                     new Email([
                         'message' => 'L\'adresse email {{ value }} n\'est pas une adresse valide',
