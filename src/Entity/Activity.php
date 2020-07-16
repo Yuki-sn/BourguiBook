@@ -6,6 +6,7 @@ use App\Repository\ActivityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=ActivityRepository::class)
@@ -180,12 +181,12 @@ class Activity
         return $this;
     }
 
-    public function getPhoneNumber(): ?int
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(int $phoneNumber): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
 
@@ -234,4 +235,75 @@ class Activity
 
         return $this;
     }
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Gedmo\Slug(fields={"title"})
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="string", length=14)
+     */
+    private $siret;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $typeActivity;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $pictur;
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(string $siret): self
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    public function getTypeActivity(): ?string
+    {
+        return $this->typeActivity;
+    }
+
+    public function setTypeActivity(string $typeActivity): self
+    {
+        $this->typeActivity = $typeActivity;
+
+        return $this;
+    }
+
+    public function getPictur(): ?string
+    {
+        return $this->pictur;
+    }
+
+    public function setPictur(string $pictur): self
+    {
+        $this->pictur = $pictur;
+
+        return $this;
+    }
+
+
 }

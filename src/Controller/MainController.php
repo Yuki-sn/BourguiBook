@@ -16,16 +16,16 @@ class MainController extends AbstractController
 {
     /**
      * @Route("/", name="main_home")
-     *
      */
     public function index()
     {
-        $articleRepository = $this->getDoctrine()->getRepository(Activity::class);
-        $foundArticles = $articleRepository->findAll();
+        $activityRepository = $this->getDoctrine()->getRepository(Activity::class);
 
-        
+        $activity = $activityRepository->findActivityForHome();
 
-        return $this->render('main/home.html.twig');
+        return $this->render('main/home.html.twig', [
+            'activitys' => $activity
+        ]);
     }
 
     /**

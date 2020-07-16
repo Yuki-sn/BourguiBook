@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     google_recaptcha_private_key: '%env(GOOGLE_RECAPTCHA_PRIVATE_KEY)%'
+    app.activity.photos.directory: '%kernel.project_dir%/public/images/uploads/'
 
 services:
     # default configuration for services in *this* file

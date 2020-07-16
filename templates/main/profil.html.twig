@@ -19,7 +19,7 @@
             <ul class="pr-0 my-3 col-12 offset-0 col-md-6 offset-md-3 list-group rp-0 border-style">
                 <li class="list-group-item list-group-item-dark">Pseudonyme : <span class="text-dark">{{ app.user.pseudonym }}</span></li>
                 <li class="list-group-item list-group-item-dark">Adresse Email : <span class="text-dark">{{ app.user.email }}</span></li>
-                <li class="list-group-item list-group-item-dark">Numéro de télephone : <span class="text-dark">{{ app.user.phoneNumber }}</span></li>
+                <li class="list-group-item list-group-item-dark">Numéro de télephone : <span class="text-dark">0{{ app.user.phoneNumber }}</span></li>
                 <li class="list-group-item list-group-item-dark">Compte : <span class="text-dark">{{ is_granted('ROLE_ADMIN') ? 'Administrateur' : 'Membre' }}</span></li>
             </ul>
         </div>

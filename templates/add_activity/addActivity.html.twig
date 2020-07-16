@@ -2,16 +2,80 @@
 {% extends 'base.html.twig' %}
 
 {# Titre de la page #}
-{% block title %}Accueil{% endblock %}
+{% block title %}Ajouter une activité{% endblock %}
 
 {# Contenu de la page #}
 {% block body %}
-    <h1>ajouté une activité</h1>
+    <div class="container-fluid">
+        {# Titre h1 #}
+        <div class="row">
+            <h1 class="col-12 text-center my-5">Ajouter une activité : tout les champs doivent être remplis</h1>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 offset-md-4">
+                {# Ouverture du formulaire #}
+                {{ form_start(formActivity) }}
 
-    {{ form(form) }}
+                    {# Affichage des erreurs générales du formulaire #}
+                    {{ form_errors(formActivity) }}
+
+                    {# Champ email #}
+                    {{ form_row(formActivity.email) }}
+
+                    {# Champ téléphone #}
+                    {{ form_row(formActivity.phoneNumber) }}
+
+                    {# Champ sirret #}
+                    {{ form_row(formActivity.siret) }}
+
+                    {# Champ titre #}
+                    {{ form_row(formActivity.title) }}
+
+                    {# Champ type #}
+                    {{ form_row(formActivity.typeActivity) }}
+
+                    {# Champ ville #}
+                    {{ form_row(formActivity.city) }}
+
+                    {# Champ code postal #}
+                    {{ form_row(formActivity.postalCode) }}
+
+                    {# Champ address #}
+                    {{ form_row(formActivity.address) }}
+
+                    {# Champ description #}
+                    {{ form_row(formActivity.description) }}
+
+                    {# Champ de date de début #}
+                    {{ form_row(formActivity.startDate) }}
+
+                    {# Bouton de date de fin  #}
+                    {{ form_row(formActivity.endDate) }}
+
+                    {# ajout de photo #}
+                    {{ form_row(formActivity.pictur) }}
+
+                    {# Bouton de validation #}
+                    {{ form_row(formActivity.save) }}
+
+
+
+                {# Fermeture du formulaire #}
+                {{ form_end(formActivity) }}
+
+
+            </div>
+        </div>
+
+    </div>
 {% endblock %}
 
 {# Fichiers CSS individuels de la page #}
 {% block stylesheets %}
 
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $("input[type=file]").change(function (e){$(this).next('.custom-file-label').text(e.target.files[0].name);})
+    </script>
 {% endblock %}

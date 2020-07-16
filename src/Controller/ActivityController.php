@@ -2,16 +2,184 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
+use App\Form\ActiviteType;
+use Faker;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ActivityController extends AbstractController
 {
     /**
-     * @Route("/activity", name="main_activity")
+     * @Route("/toutes-les-activite/", name="main_activity")
      */
-    public function index()
+    public function allActivity(Request $request, PaginatorInterface $paginator)
     {
-        return $this->render('activity/allActivity.html.twig');
+
+        // On récupère dans l'url la données GET page (si elle n'existe pas, la valeur retournée par défaut sera la page 1)
+        $requestedPage = $request->query->getInt('page', 1);
+
+        // Si le numéro de page demandé dans l'url est inférieur à 1, erreur 404
+        if($requestedPage < 1){
+            throw new NotFoundHttpException();
+        }
+
+        // Récupération du manager des entités
+        $em = $this->getDoctrine()->getManager();
+
+        // Création d'une requête qui servira au paginator pour récupérer les articles de la page courante
+        $query = $em->createQuery('SELECT a FROM App\Entity\Activity a ORDER BY a.id DESC');
+
+        $pageActivitys =$paginator->paginate(
+            $query,
+            $requestedPage,
+            9
+        );
+
+
+
+        return $this->render('activity/allActivity.html.twig', [
+            'activitys' => $pageActivitys
+        ]);
+    }
+
+    /**
+     * @Route("/ajouter_une_activiter/", name="add_activity")
+     */
+    public function newActivity(Request $request)
+    {
+        $faker = Faker\Factory::create('fr_FR');
+        $newactivite = new Activity();
+
+        $form = $this->createForm(ActiviteType::class , $newactivite);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            // Extraction de l'objet de la photo envoyée dans le formulaire
+            $photo = $form->get('pictur')->getData();
+
+            // Création d'un nouveau nom aléatoire pour la photo avec son extension (récupérée via la méthode guessExtension() )
+            $newFileName = md5(time() . rand() . uniqid() ) . '.' . $photo->guessExtension();
+
+            // Déplacement de la photo dans le dossier que l'on avait paramétré dans le fichier services.yaml, avec le nouveau nom qu'on lui a généré
+            $photo->move(
+                $this->getParameter('app.activity.photos.directory'),     // Emplacement de sauvegarde du fichier
+                $newFileName    // Nouveau nom du fichier
+            );
+
+            $newactivite
+                ->setPublicationDate(new \DateTime())
+                ->setPictur($newFileName)
+                ->setEmail($faker->email)
+                ->setPhoneNumber($faker->phoneNumber(10))
+            ;
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($newactivite);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre activiter a bien étais ajouter');
+
+            // Redirection de l'utilisateur vers la page détaillée de l'activiter tout nouvellement créé
+            return $this->redirectToRoute('activity_view', [
+                'slug' => $newactivite->getSlug()
+            ]);
+        }
+
+        return $this->render('add_activity/addActivity.html.twig',[
+            'formActivity'=> $form->createView()
+        ]);
+    }
+
+    /**
+     * Page d'affichage d'une publication en détail
+     *
+     * @Route("/activite/{slug}/", name="activity_view")
+     */
+    public function publicationView(Activity $activity, Request $request)
+    {
+        return $this->render('activity/activityView.html.twig',[
+            'activitys' => $activity
+        ]);
+    }
+
+    /**
+     * Page affichant les résultats de recherches faites par le formulaire de recherche dans la navbar
+     *
+     * @Route("/recherche/", name="activity_search")
+     */
+    public function search(Request $request, PaginatorInterface $paginator){
+
+        // Récupération du numéro de la page demandée dans l'url (si il existe pas, 1 sera pris à la place)
+        $requestedPage = $request->query->getInt('page', 1);
+
+        // Si la page demandée est inférieur à 1, erreur 404
+        if($requestedPage < 1){
+            throw new NotFoundHttpException();
+        }
+
+        // Récupération du manager général des entités
+        $em = $this->getDoctrine()->getManager();
+
+        // Recherche de l'utilisateur, récupérée depuis l'url)
+        $activityType = $request->query->get('q');
+        $postalCode = $request->query->get('c');
+        $ville = $request->query->get('v');
+
+        // Création de plusieur requette a effectué en fonction des champ
+        if (!empty($activityType) && !empty($postalCode) && !empty($ville)){
+            $query = $em
+                ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.postalCode LIKE :code AND a.typeActivity LIKE :type AND a.city LIKE :ville ')
+                ->setParameters(['type' => '%' . $activityType . '%','code' => '%' . $postalCode . '%','ville' => '%' . $ville . '%']);
+            ;
+        }elseif (!empty($activityType) && !empty($postalCode)){
+            $query = $em
+                ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.postalCode LIKE :code AND a.typeActivity LIKE :type ')
+                ->setParameters(['type' => '%' . $activityType . '%','code' => '%' . $postalCode . '%']);
+            ;
+        }elseif (!empty($activityType) && !empty($ville)){
+            $query = $em
+                ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.city LIKE :ville AND a.typeActivity LIKE :type ')
+                ->setParameters(['type' => '%' . $activityType . '%','ville' => '%' . $ville . '%']);
+            ;
+        }elseif (!empty($postalCode) && !empty($ville)){
+            $query = $em
+                ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.postalCode LIKE :code AND a.city LIKE :ville ')
+                ->setParameters(['ville' => '%' . $ville . '%','code' => '%' . $postalCode . '%']);
+            ;
+        }elseif (!empty($postalCode)){
+            $query = $em
+                ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.postalCode LIKE :code ORDER BY a.publicationDate DESC')
+                ->setParameters(['code' => '%' . $postalCode . '%'])
+            ;
+        }elseif (!empty($activityType)){
+            $query = $em
+                ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.typeActivity LIKE :type ORDER BY a.publicationDate DESC')
+                ->setParameters(['type' => '%' . $activityType . '%'])
+            ;
+        }elseif (!empty($ville)){
+            $query = $em
+                ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.city LIKE :ville ORDER BY a.publicationDate DESC')
+                ->setParameters(['ville' => '%' . $ville . '%'])
+            ;
+        }
+
+        // Récupération des activité
+        $activity = $paginator->paginate(
+            $query,
+            $requestedPage,
+            6
+        );
+
+        dump($query);
+        // Appel de la vue en lui envoyant les articles à afficher
+        return $this->render('activity/actitivySearch.html.twig', [
+            'activitys' => $activity
+        ]);
     }
 }

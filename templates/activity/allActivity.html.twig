@@ -2,14 +2,62 @@
 {% extends 'base.html.twig' %}
 
 {# Titre de la page #}
-{% block title %}Activité{% endblock %}
+{% block title %}Toutes les activité{% endblock %}
 
 {# Contenu de la page #}
 {% block body %}
-    <h1>activité</h1>
-{% endblock %}
 
-{# Fichiers CSS individuels de la page #}
-{% block stylesheets %}
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-12 d-md-flex mt-md-3">
+                <div class="row mr-md-5 ">
+                    <div class="col-10 offset-1 col-md-4 mt-3 ">
+                        <form class="form-inline my-2 my-lg-0" method="GET" action="{{ path('activity_search') }}">
+                            <fieldset><!--Regroupe un ensemble de champs avec légende-->
+                                <select class="form-control " type="search" name="q">
+                                    <option selected disabled >choissisait une activité par son type</option>
+                                    <option value="hotel">Hotel</option>
+                                    <option value="restaurant">Restaurant</option>
+                                    <option value="autre">Autre</option>
+                                </select>
+                            </fieldset>
+                            <input type="text" class="form-control" name="c" placeholder="Code postal">
+                            <input type="text" class="form-control" name="v" placeholder="Ville">
+                            <button type="submit" class=" offset-4 btn btn-dark">Validé</button
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 ">
+                        <section class="row">
+                            {% for activity in activitys %}
+                                <div class="mt-2  col-12 col-md-4">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <h3 class="card-title">{{ activity.title }}</h3>
+                                            <div class="mb-2">
+                                                {{ activity.description|striptags|slice(0, 200) }}... <a href="{{ path('activity_view', { slug: activity.slug }) }}">Lire la suite</a>
+                                            </div>
+                                            <a href="{{ path('activity_view',{slug: activity.slug}) }}" class="btn btn-dark">disponible du {{ activity.StartDate|date('d/m/Y') }} au {{ activity.endDate|date('d/m/Y') }} </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" row my-3 text-center">
+            <div class=" col-12 d-inline-block">
+                {# Affichage du menu permettant de naviguer entre les différentes pages #}
+                {{ knp_pagination_render(activitys) }}
+            </div>
+        </div>
+    </div>
+
+
+
+
 
 {% endblock %}

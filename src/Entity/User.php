@@ -78,9 +78,15 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Activity::class, mappedBy="author_id")
+     */
+    private $activity;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->activity = new ArrayCollection();
     }
 
     /**
@@ -278,6 +284,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getAuthor() === $this) {
                 $comment->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Activity[]
+     */
+    public function getActivity(): Collection
+    {
+        return $this->activity;
+    }
+
+    public function addActivity(Activity $activity): self
+    {
+        if (!$this->activity->contains($activity)) {
+            $this->activity[] = $activity;
+            $activity->setAuthorId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivity(Activity $activity): self
+    {
+        if ($this->activity->contains($activity)) {
+            $this->activity->removeElement($activity);
+            // set the owning side to null (unless already changed)
+            if ($activity->getAuthorId() === $this) {
+                $activity->setAuthorId(null);
             }
         }
 
