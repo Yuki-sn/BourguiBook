@@ -61,28 +61,27 @@ body{
 .nav-footer>div>p{
     color: white;
 }
+
 /*Profil*/
 .border-style{
     border: black solid 3px;
 }
 
 /*Media query*/
-
-
 /* la page individuel*/
-iframe{
+.iframe{
     width: 350px;
     height: 300px;
 }
 
 @media screen and (min-width:500px){/*pour format tablette*/
-    iframe{
+    .iframe{
         width: 450px;
         height:400px;
     }
 }
 @media screen and (min-width:900px) {/*pour format ordinateur*/
-    iframe{
+    .iframe{
         width: 00px;
         height:350px;
     }
@@ -92,7 +91,9 @@ iframe{
     }
 }
 
-/*Changement dans le inpu file*/
+
+
+/*Changement dans le input file*/
 .custom-file-input ~ .custom-file-label:lang(fr)::after {
     content: "Choisir...";
 }
