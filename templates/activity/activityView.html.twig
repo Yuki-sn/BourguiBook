@@ -21,8 +21,8 @@
             <div class="card" id="univers">
                 <img class="card-img-top picture_wihe" src="{{ asset('images/uploads/') ~ activitys.pictur }}" alt="Card image cap">
                 <div class="card-body text-center">
-                    <p class="card-text">{{ activitys.description }}</p>
-                    <p class="card-title">L'activité est disponible du {{ activitys.StartDate|date('d/m/Y') }} au {{ activitys.endDate|date('d/m/Y') }}
+                    <p class="card-text color-black">{{ activitys.description }}</p>
+                    <p class="card-title color-black">L'activité est disponible du {{ activitys.StartDate|date('d/m/Y') }} au {{ activitys.endDate|date('d/m/Y') }}
                         et celle-ci se situe à {{ activitys.address }} à {{ activitys.city }} ({{ activitys.postalCode }})</p>
                     <a href="https://www.tripadvisor.fr/" class="btn btn-dark">Réserver </a>
                     <a class="btn btn-outline-secondary bg-dark color-white" href="{{ path('main_activity') }}">Retour</a>
@@ -44,7 +44,7 @@
                                 <div class="card-body row">
                                     <div class="col-12">
                                         <footer class="blockquote-footer mb-4">Ajouté par <strong class="text-dark"> {{ comment.author.pseudonym }} </strong><br class="d-sm-none"> Le <stong class="text-dark"> {{ comment.publicationDate|date('d/m/Y à H\\hi') }} </stong></footer>
-                                        <p>{{ comment.content }}</p>
+                                        <p class=" color-black">{{ comment.content }}</p>
                                     </div>
                                 </div>
                             </div>

@@ -27,6 +27,9 @@
 .color-white{
     color: white;
 }
+.color-black{
+    color: black;
+}
 h1{
     font-family: Birds of Paradise, Roboto, Arial, Helvetica, sans-serif;
     font-size: 3em;
@@ -88,10 +91,7 @@ body{
         width: 500px;
         height:350px;
     }
-    .picture_wihe{
-        height: 300px;
-        width: 918px;
-    }
+   
 }
 
 /*Changement dans le input file*/
