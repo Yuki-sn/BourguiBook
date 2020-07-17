@@ -63,14 +63,14 @@ easy_admin:
                 title: 'Modifier une activité'    # Titre de l'onglet
                 fields:     # Paramétrage des champs qui seront affichés dans le formulaire d'édition, ainsi que leur type et leur label
                     - {property: 'title', label: 'Titre'}
-                    - {property: 'content', type: 'fos_ckeditor', label: 'Contenu'}
+                    - {property: 'description', type: 'fos_ckeditor', label: 'Contenu'}
                     - {property: 'author', label: 'Auteur'}
                     - {property: 'comments', label: 'Commentaires'}
             new:    # Paramétrage de l'onglet d'ajout des activités
                 title: 'Créer une nouvelle activité'    # Titre de l'onglet
                 fields:     # Paramétrage des champs qui seront affichés dans le formulaire de création, ainsi que leur type et leur label
                     - {property: 'title', label: 'Titre'}
-                    - {property: 'content', type: 'fos_ckeditor', label: 'Contenu'}
+                    - {property: 'description', type: 'fos_ckeditor', label: 'Contenu'}
                     - {property: 'author', label: 'Auteur'}
 
         Comment:       # Paramétrage de l'entité Comment

@@ -112,11 +112,6 @@ class RegistrationFormType extends AbstractType
 
                     return strtoupper($key);
                 },
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci d\'indiquer votre genre'
-                    ]),
-                ]
             ])
             // Champ email
             ->add('email', EmailType::class, [

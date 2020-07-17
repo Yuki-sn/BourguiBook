@@ -321,6 +321,12 @@ class Activity
 
         return $this;
     }
+    public function __toString() {
+
+    // Le return doit renvoyer quelque chose permettant d'identifier facilement l'élément en question
+    // Ici ça retournera une phrase type "25 - bob@exemple.com"
+    return $this->id . ' - ' . $this->email;
+	}
 
 
 }
