@@ -26,7 +26,7 @@ class ActiviteType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'Adresse Email',
+                'label' => 'Adresse Email *',
                 'constraints' => [
                     new Email([
                         'message' => 'L\'adresse email {{ value }} n\'est pas une adresse valide'
@@ -38,7 +38,7 @@ class ActiviteType extends AbstractType
             ])
 
             ->add('phoneNumber', TextType::class, [
-                'label' => 'Numéro de téléphone',
+                'label' => 'Numéro de téléphone *',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci de renseigner un numéro de téléphone'
@@ -50,7 +50,7 @@ class ActiviteType extends AbstractType
                 ]
             ])
             ->add('siret', TextType::class, [
-                'label' => 'Votre numéro de siret',
+                'label' => 'Votre numéro de siret *',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci de renseigner un numéro de siret'
@@ -62,7 +62,7 @@ class ActiviteType extends AbstractType
                 ]
             ])
             ->add('typeActivity', ChoiceType::class, [
-                'label' => 'le type d\'activité',
+                'label' => 'le type d\'activité *',
                 'choices'  => [
                     'hotel' => 'hotel',
                     'restaurant' => 'restaurant',
@@ -70,7 +70,7 @@ class ActiviteType extends AbstractType
                 ],
             ])
             ->add('title', TextType::class, [
-                'label' => 'Titre',
+                'label' => 'Titre *',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci de renseigner un titre'
@@ -84,7 +84,7 @@ class ActiviteType extends AbstractType
                 ]
             ])
             ->add('city', TextType::class, [
-                'label' => 'Ville',
+                'label' => 'Ville *',
                 'constraints' => [
 
                     new NotBlank([
@@ -99,7 +99,7 @@ class ActiviteType extends AbstractType
                 ]
             ])
             ->add('postalCode', TextType::class, [
-                'label' => 'Code Postal',
+                'label' => 'Code Postal *',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci de renseigner un mot de passe'
@@ -111,7 +111,7 @@ class ActiviteType extends AbstractType
                 ]
             ])
             ->add('address', TextType::class, [
-                'label' => 'Address',
+                'label' => 'Address *',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci de renseigner une ville'
@@ -124,9 +124,8 @@ class ActiviteType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('description', CKEditorType::class, [
-                'purify_html' => true,
-                'label' => 'Description de l\'activite',
+            ->add('description', TextType::class, [
+                'label' => 'Description de l\'activite *',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci de renseigner une ville'
@@ -142,20 +141,20 @@ class ActiviteType extends AbstractType
             ])
 
             ->add('startDate', DateType::class, [
-                'label' => 'début de l\'activitée jour/mois/année',
+                'label' => 'début de l\'activitée jour/mois/année *',
                 'widget' => 'single_text',
                 // this is actually the default format for single_text
                 'format' => 'yyyy-MM-dd',
             ])
 
             ->add('endDate', DateType::class, [
-                'label' => 'fin de l\'activitée jour/mois/année',
+                'label' => 'fin de l\'activitée jour/mois/année *',
                 'widget' => 'single_text',
                 // this is actually the default format for single_text
                 'format' => 'yyyy-MM-dd',
             ])
             ->add('pictur', FileType::class, [
-                'label' => 'Sélectionner une photo',
+                'label' => 'Sélectionner une photo *',
                 'attr' => array(
                     'class' => 'custom-file-input'
                 ),

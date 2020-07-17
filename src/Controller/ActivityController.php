@@ -4,11 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Activity;
 use App\Form\ActiviteType;
-use Faker;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Comment;
 use App\Form\CommentType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -51,10 +51,13 @@ class ActivityController extends AbstractController
 
     /**
      * @Route("/ajouter_une_activite/", name="add_activity")
+     * 
      */
     public function newActivity(Request $request)
     {
-        $faker = Faker\Factory::create('fr_FR');
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('main_home');
+        }
         $newactivite = new Activity();
 
         $form = $this->createForm(ActiviteType::class , $newactivite);
@@ -62,6 +65,9 @@ class ActivityController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+            // Récupération de l'utilisateur actuellement connecté
+            $userConnected = $this->getUser();
 
             // Extraction de l'objet de la photo envoyée dans le formulaire
             $photo = $form->get('pictur')->getData();
@@ -78,14 +84,13 @@ class ActivityController extends AbstractController
             $newactivite
                 ->setPublicationDate(new \DateTime())
                 ->setPictur($newFileName)
-                ->setEmail($faker->email)
-                ->setPhoneNumber($faker->phoneNumber(10))
+                ->setAuthor( $userConnected )
             ;
             $em = $this->getDoctrine()->getManager();
             $em->persist($newactivite);
             $em->flush();
 
-            $this->addFlash('success', 'Votre activiter a bien étais ajouter');
+            $this->addFlash('success', 'Votre activité a bien été ajoutée !');
 
             // Redirection de l'utilisateur vers la page détaillée de l'activiter tout nouvellement créé
             return $this->redirectToRoute('activity_view', [
@@ -186,6 +191,9 @@ class ActivityController extends AbstractController
                 ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.postalCode LIKE :code AND a.typeActivity LIKE :type AND a.city LIKE :ville ')
                 ->setParameters(['type' => '%' . $activityType . '%','code' => '%' . $postalCode . '%','ville' => '%' . $ville . '%']);
             ;
+        }elseif (empty($activityType) && empty($postalCode) && empty($ville)){
+            $this->addFlash('error', 'Veuillez ne pas envoyer un formulaire vide');
+            return $this->redirectToRoute('main_home');
         }elseif (!empty($activityType) && !empty($postalCode)){
             $query = $em
                 ->createQuery('SELECT a FROM App\Entity\Activity a WHERE a.postalCode LIKE :code AND a.typeActivity LIKE :type ')
@@ -225,8 +233,7 @@ class ActivityController extends AbstractController
             6
         );
 
-        dump($query);
-        // Appel de la vue en lui envoyant les activités à afficher
+        // Appel de la vue en lui envoyant les articles à afficher
         return $this->render('activity/actitivySearch.html.twig', [
             'activitys' => $activity
         ]);

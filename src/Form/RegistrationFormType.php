@@ -112,6 +112,11 @@ class RegistrationFormType extends AbstractType
 
                     return strtoupper($key);
                 },
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci d\'indiquer votre genre'
+                    ]),
+                ]
             ])
             // Champ email
             ->add('email', EmailType::class, [
@@ -169,7 +174,7 @@ class RegistrationFormType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Créer mon compte',
                 'attr' => [
-                    'class' => 'btn btn-outline-secondary col-12 bg-dark'
+                    'class' => 'btn btn-outline-secondary col-12 bg-dark color-white'
                 ]
             ])
         ;

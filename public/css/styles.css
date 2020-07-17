@@ -24,19 +24,21 @@
 }
 
 /*Propriétés générales*/
+.color-white{
+    color: white;
+}
 h1{
     font-family: Birds of Paradise, Roboto, Arial, Helvetica, sans-serif;
     font-size: 3em;
-    color: darkgray;
+    color: #3b3b3b;
 }
 h2, h3{
-    font-family: Champagne et Limousine ,Roboto , Cambria, Georgia, Times, 'Times New Roman', serif;
-    color: darkgray;
-    font-size: 2em;
+    font-family: Champagne et Limousine, Roboto , Cambria, Georgia, Times, 'Times New Roman', serif;
+    color: #3b3b3b;
 }
 p,a{
     font-family: Roboto, Arial, sans-serif;
-    color: dark;
+    color: #fcfcfc;
 }
 body{
     background: #200122;  /* fallback for old browsers */
@@ -70,20 +72,20 @@ body{
 
 /*Media query*/
 /* la page individuel*/
-.iframe{
+.iframe>iframe{
     width: 350px;
     height: 300px;
 }
 
 @media screen and (min-width:500px){/*pour format tablette*/
-    .iframe{
+    .iframe>iframe{
         width: 450px;
         height:400px;
     }
 }
 @media screen and (min-width:900px) {/*pour format ordinateur*/
-    .iframe{
-        width: 00px;
+    .iframe>iframe{
+        width: 500px;
         height:350px;
     }
     .picture_wihe{
@@ -92,9 +94,8 @@ body{
     }
 }
 
-
-
 /*Changement dans le input file*/
 .custom-file-input ~ .custom-file-label:lang(fr)::after {
     content: "Choisir...";
 }
+

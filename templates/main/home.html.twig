@@ -7,6 +7,9 @@
 
 {# Contenu de la page #}
 {% block body %}
+    {# Affichage des messages flashs de type "success" si il y en a #}
+    {% include 'partials/error.html.twig' %}
+    {% include 'partials/success.html.twig' %}
 
     <div class="container-fluid">
         <div class="row">
@@ -26,21 +29,21 @@
         </div>
         <div class="row mb-5">
             <div class="col-12 ">
-                    <section class="row">
-                        {% for activity in activitys %}
-                            <div class="mt-2  col-12 col-md-4">
-                                <div class="card">
-                                    <div class="card-body text-center">
-                                        <h3 class="card-title">{{ activity.title }}</h3>
-                                        <div class="mb-2">
-                                            {{ activity.description|striptags|slice(0, 200) }}... <a href="{{ path('activity_view', { slug: activity.slug }) }}">Lire la suite</a>
-                                        </div>
-                                        <a href="{{ path('activity_view',{slug: activity.slug}) }}" class="btn btn-dark">disponible du {{ activity.StartDate|date('d/m/Y') }} au {{ activity.endDate|date('d/m/Y') }} </a>
+                <section class="row">
+                    {% for activity in activitys %}
+                        <div class="mt-2  col-12 col-md-4">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h3 class="card-title">{{ activity.title }}</h3>
+                                    <div class="mb-2">
+                                        {{ activity.description|striptags|slice(0, 200) }}... <a href="{{ path('activity_view', { slug: activity.slug }) }}">Lire la suite</a>
                                     </div>
+                                    <a href="{{ path('activity_view',{slug: activity.slug}) }}" class="btn btn-dark">disponible du {{ activity.StartDate|date('d/m/Y') }} au {{ activity.endDate|date('d/m/Y') }} </a>
                                 </div>
                             </div>
-                        {% endfor %}
-                    </section>
+                        </div>
+                    {% endfor %}
+                </section>
             </div>
         </div>
     </div>
